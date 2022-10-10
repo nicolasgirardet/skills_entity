@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Toutes les compétences{% endblock %}
+
+{% block body %}
+    <div id="all-skills"></div>
+{% endblock %}
+
+{% block javascripts %}
+        {{ parent() }}
+        {{ encore_entry_script_tags('allSkills') }}
+{% endblock %}
