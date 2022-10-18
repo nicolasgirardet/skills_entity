@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{% if skillEncoded is defined %}Edition de la compétence{% else %}Ajouter une compétence
+	{% endif %}
+{% endblock %}
+
+{% block body %}
+
+	<div>
+		<p>Modifier une compétence</p>
+	</div>
+
+	<div id="createOrEditSkill" {% if skillEncoded is defined %} data-skill-encoded={{ skillEncoded }} {% endif %}></div>
+
+
+{% endblock %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	{{ encore_entry_link_tags('createOrEditSkill') }}
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	{{ encore_entry_script_tags('createOrEditSkill') }}
+{% endblock %}

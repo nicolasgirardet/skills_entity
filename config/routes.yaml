@@ -3,5 +3,9 @@
 #    controller: App\Controller\DefaultController::index
 
 index:
-    path: /
-    controller: App\Controller\SkillController::skillIndex
+  path: /
+  controller: App\Controller\SkillController::skillIndex
+
+add_or_edit:
+  path: /skills/edit/{id}
+  controller: App\Controller\SkillController::skillEdit

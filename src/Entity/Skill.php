@@ -3,13 +3,28 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Delete;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Put;
 use App\Repository\SkillRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use JsonSerializable;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: SkillRepository::class)]
-#[ApiResource]
-class Skill
+#[ApiResource(
+    operations: [
+        new Get(),
+        new GetCollection(),
+        new Post(),
+        new Put(),
+        new Delete(),
+    ],
+)]
+class Skill implements JsonSerializable
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -17,6 +32,7 @@ class Skill
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
     private ?string $name = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
@@ -27,6 +43,24 @@ class Skill
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $modificationDate = null;
+
+    public function jsonSerialize()
+    {
+        $skill = [
+            'id' => $this->getId(),
+            'name' => $this->getName(),
+            'description' => $this->getDescription(),
+        ];
+
+    
+        return $skill;
+    }
+
+    public function __construct()
+    {
+        $this->creationDate = new \DateTimeImmutable();
+        $this->modificationDate = new \DateTime();
+    }
 
     public function getId(): ?int
     {
@@ -62,22 +96,26 @@ class Skill
         return $this->creationDate;
     }
 
+    /*
     public function setCreationDate(\DateTimeInterface $creationDate): self
     {
         $this->creationDate = $creationDate;
 
         return $this;
     }
+    */
 
     public function getModificationDate(): ?\DateTimeInterface
     {
         return $this->modificationDate;
     }
 
+    /*
     public function setModificationDate(\DateTimeInterface $modificationDate): self
     {
         $this->modificationDate = $modificationDate;
 
         return $this;
     }
+    */
 }
