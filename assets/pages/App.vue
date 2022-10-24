@@ -1,5 +1,5 @@
 <template>
-  
+
   <Skills></Skills>
   
 </template>
