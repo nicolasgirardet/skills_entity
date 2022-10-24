@@ -1,5 +1,6 @@
 <template>
   <div>
+    <button><a href='/'>Retour</a></button>
     <p>ID de la compétence : {{ my_id }}</p>
     <input v-model="skillName" placeholder="nom de la compétence" />
     <p>Le nom de la compétence est : {{ skillName }}</p>
