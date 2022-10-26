@@ -30,9 +30,9 @@
             <a title="Éditer la compétence" :href="`/skills/${skill.id}`">
               <pen-s-v-g fill-color="#1e83a3" height="26" width="26" />
             </a>
-            <a title="Supprimer la compétence" :href="`/skills/${skill.id}`">
-              <trash-can-s-v-g fill-color="#1e83a3" height="26" width="26" />
-            </a>
+            <button v-on:click="handleDeletion(skill.id)" title="Supprimer la compétence">
+              <trash-can-s-v-g fill-color="#1e83a3" height="26" width="26" /></button>
+            
           </td>
         </tr>
       </tbody>
@@ -44,6 +44,7 @@
 import axios from "axios";
 import PenSVG from "../components/PenSVG";
 import TrashCanSVG from "./TrashCanSVG.vue";
+import {deleteSkill} from "../services/skill-service";
 
 export default {
   name: "Skills",
@@ -62,5 +63,13 @@ export default {
     const response = await axios.get("/api/skills");
     this.skills = response.data["hydra:member"];
   },
+
+  methods: {
+    async handleDeletion(skillId) {
+      let response;
+      response = await deleteSkill(skillId);
+      console.log(response);
+    },
+  }
 };
 </script>

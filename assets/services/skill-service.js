@@ -15,8 +15,8 @@ export function postSkill(name, description) {
 /**
  * deletes a skill
  */
- export function deleteSkill(skillId) {    
-    return axios.delete(`/api/skills/${skillId}`);
+ export function deleteSkill(id) {    
+    return axios.delete(`/api/skills/${id}`);
 }
 
 /**
