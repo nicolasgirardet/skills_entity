@@ -1,7 +1,5 @@
 <template>
-
   <Skills></Skills>
-  
 </template>
 
 <script>

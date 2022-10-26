@@ -8,10 +8,14 @@
 {% block body %}
 
 	<div>
-		<p>Modifier la compétence ...</p>
+		<p>Modifier la compétence <b>{{ name }}</b></p>
 	</div>
 
-	<div id="createOrEditSkill" {% if skillEncoded is defined %} data-skill-encoded={{ skillEncoded }} {% endif %}></div>
+	<div id="createOrEditSkill" 
+	data-id={{id}} 
+	data-name={{name}}
+	data-description={{description}}
+	></div>
 
 
 {% endblock %}

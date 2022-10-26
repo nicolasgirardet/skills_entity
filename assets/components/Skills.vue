@@ -4,7 +4,8 @@
     
     <button type="button">
       <a 
-      title="Ajouter une compétence" 
+      title="Ajouter une compétence"
+      href='/skills' 
         >ajouter une compétence</a
       >
     </button>
@@ -29,6 +30,9 @@
             <a title="Éditer la compétence" :href="`/skills/${skill.id}`">
               <pen-s-v-g fill-color="#1e83a3" height="26" width="26" />
             </a>
+            <a title="Supprimer la compétence" :href="`/skills/${skill.id}`">
+              <trash-can-s-v-g fill-color="#1e83a3" height="26" width="26" />
+            </a>
           </td>
         </tr>
       </tbody>
@@ -39,11 +43,13 @@
 <script>
 import axios from "axios";
 import PenSVG from "../components/PenSVG";
+import TrashCanSVG from "./TrashCanSVG.vue";
 
 export default {
   name: "Skills",
   components: {
     PenSVG,
+    TrashCanSVG,
   },
   data() {
     return {

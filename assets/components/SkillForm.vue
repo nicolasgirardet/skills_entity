@@ -1,43 +1,66 @@
 <template>
   <div>
-    <p>ID de la compétence : {{ my_id }}</p>
-    <input v-model="skillName" placeholder="nom de la compétence" />
-    <p>Le nom de la compétence est : {{ skillName }}</p>
+    <a href="/"><button>Retour</button></a>
+    <p>ID de la compétence : {{ skillId }}</p>
+    <input v-model="newName" placeholder="Nom de la compétence" />
+    <p>Le nom de la compétence est : {{ newName }}</p>
     <br />
     <textarea
-      v-model="skillDescription"
-      placeholder="décrivez brièvement la compétence"
+      v-model="newDescription"
+      placeholder="Description"
     ></textarea>
-    <p>La description de la compétence est : {{ skillDescription }}</p>
-    <button v-on:click="handleValidation()">Valider</button>
+    <p>La description de la compétence est : {{ newDescription }}</p>
+    <button v-on:click="handleValidation()">Ajouter</button>
     <button v-on:click="handleDeletion()">Supprimer</button>
+    <button v-on:click="handleEdition()">Mettre à jour</button>
   </div>
 </template>
 
 <script>
-import { postSkill, deleteSkill } from "../services/skill-service";
+import { postSkill, deleteSkill, editSkill } from "../services/skill-service";
 
 export default {
   name: "SkillForm",
   data() {
     return {
-      skillName: "",
-      skillDescription: "",
-      //skillId: null,
+      newName: "",
+      newDescription: "",
+      skillId: this.id,
+      skillName: this.name,
+      skillDescription: this.description
     };
+  },
+
+  props: {
+    id: {
+      type: Number,
+      required: true,
+      default: null,
+    },
+
+    name: {
+          type: String,
+          required: true,
+          default: "",
+        },
+
+        description: {
+          type: String,
+          required: false,
+          default: "",
+        }
   },
 
   methods: {
     async handleValidation() {
-      //console.log(this.skillName);
-
       let response;
       try {
-        response = await postSkill(this.skillName, this.skillDescription);
+        response = await postSkill(this.newName, this.newDescription);
       } catch (e) {
         console.log(e);
       } finally {
         console.log(response.data.id);
+        this.skillId = response.data.id;
       }
     },
 
@@ -49,8 +72,19 @@ export default {
       let my_id = url_split[my_id_location];
       //console.log(my_id );
       response = await deleteSkill(my_id);
+      console.log(response);
+    },
+
+    async handleEdition() {
+      let response;
+      try {
+        response = await editSkill(this.skill);
+      } catch (e) {
+        console.log(e);
+      } finally {
         console.log(response);
       }
-    }
-  }
+    },
+  },
+};
 </script>

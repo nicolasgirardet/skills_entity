@@ -13,12 +13,20 @@ export function postSkill(name, description) {
 }
 
 /**
- * delete a skill
+ * deletes a skill
  */
- export function deleteSkill(skillId) {
-    
-    
+ export function deleteSkill(skillId) {    
     return axios.delete(`/api/skills/${skillId}`);
+}
+
+/**
+ * modifies a skill
+ */
+export function editSkill(skill) {
+    const params = {};
+    params.name = skill.name;
+    params.description = skill.description;
+    return axios.put(`/api/skills/${skill.id}`, params);
 }
 
 
