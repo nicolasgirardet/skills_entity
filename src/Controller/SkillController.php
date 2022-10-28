@@ -18,6 +18,7 @@ class SkillController extends AbstractController
     {
     return $this->render('skills/edit_skill.html.twig', [
         'id' => $skill->getId(),
+        'slug' => $skill->getSlug(),
         'name' => $skill->getName(),
         'description' => $skill->getDescription()
 ]);

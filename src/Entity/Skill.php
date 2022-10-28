@@ -57,7 +57,7 @@ class Skill implements JsonSerializable
     {
         $skill = [
             'id' => $this->getId(),
-            
+            'slug' => $this->getSlug(),
             'name' => $this->getName(),
             'description' => $this->getDescription(),
         ];

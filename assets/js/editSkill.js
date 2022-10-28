@@ -7,6 +7,7 @@ new Vue({
         return h(App, {
             props: {
                 id: parseInt(this.$el.getAttribute('data-id'), 10),
+                slug: this.$el.getAttribute('data-slug'),
                 name: this.$el.getAttribute('data-name'),
                 description: this.$el.getAttribute('data-description')
             },

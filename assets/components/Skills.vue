@@ -27,7 +27,7 @@
           <td v-text="skill.description"></td>
           <td v-text="skill.modificationDate"></td>
           <td class="flex justify-center py-4">
-            <a title="Éditer la compétence" :href="`/skills/${skill.id}`">
+            <a title="Éditer la compétence" :href="`/skills/${skill.slug}`">
               <pen-s-v-g fill-color="#1e83a3" height="26" width="26" />
             </a>
             <button v-on:click="handleDeletion(skill.id)" title="Supprimer la compétence">

@@ -7,7 +7,7 @@ index:
   controller: App\Controller\SkillController::skillIndex
 
 add_or_edit:
-  path: /skills/{id}
+  path: /skills/{slug}
   controller: App\Controller\SkillController::skillEdit
 
 add_skill:
