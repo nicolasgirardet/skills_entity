@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	Ajouter une compétence
+{% endblock %}
+
+{% block body %}
+
+	<div>
+		<p>Ajouter une nouvelle compétence</p>
+	</div>
+
+    <div id="addSkill"></div>
+
+{% endblock %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	{{ encore_entry_link_tags('addSkill') }}
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	{{ encore_entry_script_tags('addSkill') }}
+{% endblock %}

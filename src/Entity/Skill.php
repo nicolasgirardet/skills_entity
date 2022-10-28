@@ -13,6 +13,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use JsonSerializable;
 use Symfony\Component\Validator\Constraints as Assert;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 #[ORM\Entity(repositoryClass: SkillRepository::class)]
 #[ApiResource(
@@ -31,6 +32,12 @@ class Skill implements JsonSerializable
     #[ORM\Column]
     private int $id;
 
+    /**
+     * @Gedmo\Slug(fields={"name"})
+     */
+    #[ORM\Column(length: 255, unique: true)]
+    private ?string $slug = null;
+
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
     private string $name;
@@ -44,15 +51,17 @@ class Skill implements JsonSerializable
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $modificationDate = null;
 
+  
+
     public function jsonSerialize()
     {
         $skill = [
             'id' => $this->getId(),
+            
             'name' => $this->getName(),
             'description' => $this->getDescription(),
         ];
 
-    
         return $skill;
     }
 
@@ -118,4 +127,16 @@ class Skill implements JsonSerializable
         return $this;
     }
     */
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(?string $slug): self
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
 }

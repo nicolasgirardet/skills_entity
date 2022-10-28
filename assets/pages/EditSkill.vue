@@ -1,5 +1,5 @@
 <template>
-     <skill-form
+     <edit-skill-form
      :id="this.id"
      :name="this.name"
      :description="this.description"
@@ -7,12 +7,12 @@
 </template>
 
 <script>
-import SkillForm from "../components/SkillForm.vue";
+import EditSkillForm from "../components/EditSkillForm.vue";
 
 export default {
-  name: 'CreateOrEditSkill',
+  name: 'EditSkill',
 components: {
-    SkillForm,
+    EditSkillForm,
 },
 props: {
         id: {

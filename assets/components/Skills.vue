@@ -2,13 +2,13 @@
   <div class="row">
     <h1>TOUTES LES COMPÉTENCES</h1>
     
-    <button type="button">
-      <a 
+    <a 
       title="Ajouter une compétence"
-      href='/skills' 
-        >ajouter une compétence</a
+      href='/add_skill' 
+        ><button type="button">
+      ajouter une compétence
+    </button></a
       >
-    </button>
     <table class="w-full border-2">
       <thead>
         <tr>
@@ -69,6 +69,8 @@ export default {
       let response;
       response = await deleteSkill(skillId);
       console.log(response);
+    const reply = await axios.get("/api/skills");
+    this.skills = reply.data["hydra:member"];
     },
   }
 };

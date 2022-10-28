@@ -22,11 +22,17 @@ export function postSkill(name, description) {
 /**
  * modifies a skill
  */
-export function editSkill(skill) {
+export function editSkill(name, description, id) {
     const params = {};
-    params.name = skill.name;
-    params.description = skill.description;
-    return axios.put(`/api/skills/${skill.id}`, params);
+    params.name = name;
+    params.description = description;
+    return axios.put(`/api/skills/${id}`, params);
 }
 
+/**
+ * fetches the skill by its ID
+ */
+export function fetchSkillById(id) {
+    return axios.get(`/api/skills/${id}`);
+}
 

@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import App from '../pages/CreateOrEditSkill.vue';
+import App from '../pages/EditSkill.vue';
 
 
 new Vue({
@@ -12,6 +12,6 @@ new Vue({
             },
         });
     },
-}).$mount('#createOrEditSkill');
+}).$mount('#editSkill');
 
 

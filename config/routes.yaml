@@ -9,3 +9,7 @@ index:
 add_or_edit:
   path: /skills/{id}
   controller: App\Controller\SkillController::skillEdit
+
+add_skill:
+  path: /add_skill
+  controller: App\Controller\SkillController::addEdit

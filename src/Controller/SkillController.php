@@ -14,13 +14,17 @@ class SkillController extends AbstractController
         return $this->render('skills/all_skills.html.twig');
     }
 
-    #[Route('/skills/{id}')]
     public function skillEdit(Skill $skill): Response
     {
-    return $this->render('skills/edit_delete_skill.html.twig', [
+    return $this->render('skills/edit_skill.html.twig', [
         'id' => $skill->getId(),
         'name' => $skill->getName(),
         'description' => $skill->getDescription()
 ]);
+    }
+
+    public function addEdit(): Response
+    {
+    return $this->render('skills/add_skill.html.twig');
     }
 }

@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	Édition de la compétence
+{% endblock %}
+
+{% block body %}
+
+	<div>
+		<p>Compétence : <b>{{ name }}</b></p>
+	</div>
+
+	<div id="editSkill" 
+	data-id={{id}} 
+	data-name="{{ name }}"
+	data-description="{{ description }}"
+	></div>
+
+
+{% endblock %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	{{ encore_entry_link_tags('editSkill') }}
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	{{ encore_entry_script_tags('editSkill') }}
+{% endblock %}
