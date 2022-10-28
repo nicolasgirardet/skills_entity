@@ -20,7 +20,7 @@
       <tbody>
         <tr
           v-for="skill in skills"
-          :key="skill['slug']"
+          :key="skill['@id']"
           class="text-center border"
         >
           <td v-text="skill.name"></td>
