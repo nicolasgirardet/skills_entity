@@ -29,6 +29,7 @@
         "tailwindcss": "^2",
         "vue": "^2.*",
         "vue-loader": "^15.*",
+        "vue-tailwind": "^2.5.1",
         "vue-template-compiler": "^2.7.10"
     }
 }

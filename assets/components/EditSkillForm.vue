@@ -12,11 +12,13 @@
     ></textarea>
     <br />
     <button v-on:click="handleEdition()">Mettre à jour</button>
+    <Modal></Modal>
   </div>
 </template>
 
 <script>
 import { editSkill, fetchSkillById } from "../services/skill-service";
+import Modal from './GenericModal.vue'
 
 export default {
   name: "EditSkillForm",
@@ -31,7 +33,12 @@ export default {
         name: '',
         description: ''
       },
+      title: "ce titre est un exemple",
     };
+  },
+
+  components: {
+    Modal,
   },
 
   props: {
@@ -51,7 +58,23 @@ export default {
           type: String,
           required: false,
           default: "",
-        }
+        },
+        //hereunder my version
+        title: {
+            type: String,
+            required: true,
+        },
+        containerStyling: {
+            type: String,
+            default: 'flex flex-col md:flex-row items-center md:space-x-5 md:px-5 md:pb-5',
+            required: false,
+        },
+        isEmittingEventToParent: {
+            type: Boolean,
+            default: true,
+            required: false,
+        },
+
   },
 
   mounted() {
@@ -85,3 +108,7 @@ export default {
   },
 };
 </script>
+
+<style>
+
+</style>
