@@ -78,6 +78,12 @@ Encore
     // in order to use Vue.js
     .enableVueLoader()
 
+    // enabling PostCssLoader
+    .enablePostCssLoader((options) => {
+        options.postcssOptions = {
+            config: './postcss.config.js'
+        }
+    })
 ;
 
 module.exports = Encore.getWebpackConfig();
