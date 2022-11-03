@@ -11,15 +11,30 @@
       placeholder="Entrez ici une nouvelle description"
     ></textarea>
     <br />
-    <button v-on:click="handleEdition()">Mettre à jour</button>
+    <button 
+    v-on:click="handleEdition()"
+    >Mettre à jour</button>
+    <!-- LA MODALE CI-DESSOUS -->
+    <br />
+    <button @click="toggleModale()">Ouvre la modale</button>
+    <modale
+    :shows="shows"
+    :toggleModale="toggleModale"
+    :confirmAction="confirmAction"
+    ></modale>
+    <!-- FIN DE LA MODALE -->
   </div>
 </template>
 
 <script>
 import { editSkill, fetchSkillById } from "../services/skill-service";
+import Modale from "./Modale";
 
 export default {
   name: "EditSkillForm",
+  components: {
+    'modale' : Modale,
+  },
   data() {
     return {
       newName: '',
@@ -31,6 +46,7 @@ export default {
         name: '',
         description: ''
       },
+      shows: false,
     };
   },
 
@@ -61,12 +77,15 @@ export default {
   methods: {
     async handleEdition() {
       let response;
+      // la ligne ci-dessous ouvre la modale
+      this.toggleModale();
       try {
         response = await editSkill(this.newName, this.newDescription, this.skillId);
       } catch (e) {
         console.log(e);
       } finally {
         console.log(response);
+        
       }
       if (response) {
         this.skill = {
@@ -78,9 +97,15 @@ export default {
 
     async loadSkill(skillId) {
       const response = await fetchSkillById(skillId);
-      //let tarte = response.data.name;
-      //console.log(tarte);
       this.skillName = response.data.name;
+    },
+
+    toggleModale() {
+        this.shows = !this.shows;
+      },
+
+    confirmAction() {
+      console.log('confirmAction');
     }
   },
 };
