@@ -2,18 +2,18 @@
 
 <div 
 v-if="shows"
-class="bloc-modale"
+class="block-modal"
 >
 
     <div 
     class="overlay"
-    @click="toggleModale()"
+    @click="toggleModal()"
     ></div>
 
-    <div class="modale">
+    <div class="modal">
         <button 
         class="back-btn"
-        @click="toggleModale()"
+        @click="toggleModal()"
         >retour</button>
         <button 
         class="confirm-btn"
@@ -29,15 +29,15 @@ class="bloc-modale"
 <script>
 
 export default {
-    name: 'Modale',
-    props: ['shows', 'toggleModale', 'confirmAction'],
+    name: 'Modal',
+    props: ['shows', 'toggleModal', 'confirmAction'],
 }
 
 
 </script>
 
 <style scoped>
-.bloc-modale {
+.block-modal {
     position: fixed;
     top: 0;
     bottom: 0;
@@ -59,7 +59,7 @@ export default {
     right: 0;
 }
 
-.modale {
+.modal {
     background: #f1f1f1;
     color: #333;
     padding: 50px;

@@ -12,28 +12,26 @@
     ></textarea>
     <br />
     <button 
-    v-on:click="handleEdition()"
+    v-on:click="openModal()"
     >Mettre à jour</button>
     <!-- LA MODALE CI-DESSOUS -->
-    <br />
-    <button @click="toggleModale()">Ouvre la modale</button>
-    <modale
+    <modal
     :shows="shows"
-    :toggleModale="toggleModale"
+    :toggleModal="toggleModal"
     :confirmAction="confirmAction"
-    ></modale>
+    ></modal>
     <!-- FIN DE LA MODALE -->
   </div>
 </template>
 
 <script>
 import { editSkill, fetchSkillById } from "../services/skill-service";
-import Modale from "./Modale";
+import Modal from "./Modal";
 
 export default {
   name: "EditSkillForm",
   components: {
-    'modale' : Modale,
+    'modal' : Modal,
   },
   data() {
     return {
@@ -75,10 +73,21 @@ export default {
   },
 
   methods: {
-    async handleEdition() {
+    openModal() {
+      this.toggleModal();
+    },
+
+    async loadSkill(skillId) {
+      const response = await fetchSkillById(skillId);
+      this.skillName = response.data.name;
+    },
+
+    toggleModal() {
+        this.shows = !this.shows;
+      },
+
+    async confirmAction() {
       let response;
-      // la ligne ci-dessous ouvre la modale
-      this.toggleModale();
       try {
         response = await editSkill(this.newName, this.newDescription, this.skillId);
       } catch (e) {
@@ -91,21 +100,9 @@ export default {
         this.skill = {
           name: '',
           description: ''
-        }
+        },
+        this.toggleModal();
       }
-    },
-
-    async loadSkill(skillId) {
-      const response = await fetchSkillById(skillId);
-      this.skillName = response.data.name;
-    },
-
-    toggleModale() {
-        this.shows = !this.shows;
-      },
-
-    confirmAction() {
-      console.log('confirmAction');
     }
   },
 };
