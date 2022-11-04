@@ -1,11 +1,16 @@
 <template>
   <div class="row">
-    <h1>TOUTES LES COMPÉTENCES</h1>
+    <h1
+    class="font-black font-montserrat uppercase italic px-4 text-center text-tualuBlue md:text-xl"
+    >TOUTES LES COMPÉTENCES</h1>
     
     <a 
       title="Ajouter une compétence"
       href='/add_skill' 
-        ><button type="button">
+        ><button 
+        class="p-3 flex items-center border-tualuBlue hover:text-white hover:bg-tualuBlue text-tualuBlue cursor-pointer text-center uppercase font-montserrat rounded font-bold border-2 text-sm"        
+        type="button"
+        >
       ajouter une compétence
     </button></a
       >
@@ -28,10 +33,10 @@
           <td v-text="skill.modificationDate"></td>
           <td class="flex justify-center py-4">
             <a title="Éditer la compétence" :href="`/skills/${skill.slug}`">
-              <pen-s-v-g fill-color="#1e83a3" height="26" width="26" />
+              <pen-s-v-g fill-color="#1e83a3" height="29" width="29" />
             </a>
             <button v-on:click="handleDeletion(skill.id)" title="Supprimer la compétence">
-              <trash-can-s-v-g fill-color="#1e83a3" height="26" width="26" /></button>
+              <trash-can-s-v-g fill-color="#ee0000" height="22" width="22" /></button>
             
           </td>
         </tr>
@@ -75,3 +80,5 @@ export default {
   }
 };
 </script>
+
+

@@ -67,7 +67,7 @@ class Skill implements JsonSerializable
 
     public function __construct()
     {
-        $this->creationDate = new \DateTimeImmutable();
+        $this->creationDate = new \DateTimeImmutable('now');
         $this->modificationDate = new \DateTime();
     }
 

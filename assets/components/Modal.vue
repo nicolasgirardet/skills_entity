@@ -19,7 +19,7 @@ class="block-modal"
         class="confirm-btn"
         @click="confirmAction()"
         >confirmer</button>
-        <h2>Confirmez-vous la modification de cette compétence ?</h2>
+        <h2>Confirmez-vous {{ action }} de cette compétence ?</h2>
     </div>
 
 </div>
@@ -30,7 +30,7 @@ class="block-modal"
 
 export default {
     name: 'Modal',
-    props: ['shows', 'toggleModal', 'confirmAction'],
+    props: ['shows', 'toggleModal', 'confirmAction', 'action'],
 }
 
 
