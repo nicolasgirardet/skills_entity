@@ -12,13 +12,13 @@ class="block-modal"
 
     <div class="modal">
         <button 
-        class="back-btn"
-        @click="toggleModal()"
-        >retour</button>
-        <button 
-        class="confirm-btn"
+        class="confirm-btn p-1 flex items-center border-tualuBlue hover:text-white hover:bg-tualuBlue text-tualuBlue cursor-pointer text-center font-montserrat rounded font-bold border-2 text-sm"
         @click="confirmAction()"
         >confirmer</button>
+        <button 
+        class="back-btn p-1 flex items-center border-tualuBlue hover:text-white hover:bg-tualuBlue text-tualuCoral cursor-pointer text-center font-montserrat rounded font-bold border-2 text-sm"
+        @click="toggleModal()"
+        >retour</button>
         <h2>Confirmez-vous {{ action }} de cette compétence ?</h2>
     </div>
 
@@ -66,15 +66,15 @@ export default {
     position: fixed;
 }
 
-.back-btn {
+.confirm-btn {
     position: absolute;
     top: 10px;
     right: 10px;
 }
 
-.confirm-btn {
+.back-btn {
     position: absolute;
     top: 10px;
-    right: 80px;
+    right: 100px;
 }
 </style>

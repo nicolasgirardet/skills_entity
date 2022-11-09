@@ -14,8 +14,10 @@ use Doctrine\ORM\Mapping as ORM;
 use JsonSerializable;
 use Symfony\Component\Validator\Constraints as Assert;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: SkillRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 #[ApiResource(
     operations: [
         new Get(),
@@ -24,6 +26,8 @@ use Gedmo\Mapping\Annotation as Gedmo;
         new Put(),
         new Delete(),
     ],
+    normalizationContext: ['groups' => ['skill:read']],
+    denormalizationContext: ['groups' => ['skill:write']],
 )]
 class Skill implements JsonSerializable
 {
@@ -40,14 +44,17 @@ class Skill implements JsonSerializable
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
+    #[Groups(['skill:read', 'skill:write', 'book:read'])]
     private string $name;
 
+    #[Groups(['skill:read', 'skill:write', 'book:read'])]
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $creationDate = null;
 
+    #[Groups(['skill:read'])]
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $modificationDate = null;
 
@@ -67,7 +74,7 @@ class Skill implements JsonSerializable
 
     public function __construct()
     {
-        $this->creationDate = new \DateTimeImmutable('now');
+        $this->creationDate = new \DateTime();
         $this->modificationDate = new \DateTime();
     }
 
@@ -100,34 +107,28 @@ class Skill implements JsonSerializable
         return $this;
     }
 
-    public function getCreationDate(): ?\DateTimeInterface
+    public function getCreationDate(): string
     {
-        return $this->creationDate;
+        return $this->creationDate->format('d/m/Y');
     }
 
-    /*
-    public function setCreationDate(\DateTimeInterface $creationDate): self
+    #[ORM\PrePersist]
+    public function setCreationDate(): void
     {
-        $this->creationDate = $creationDate;
-
-        return $this;
-    }
-    */
-
-    public function getModificationDate(): ?\DateTimeInterface
-    {
-        return $this->modificationDate;
+        $this->creationDate = new \DateTime();
     }
 
-    /*
-    public function setModificationDate(\DateTimeInterface $modificationDate): self
+    public function getModificationDate(): string
     {
-        $this->modificationDate = $modificationDate;
-
-        return $this;
+        return $this->modificationDate->format('d/m/Y');
     }
-    */
 
+    #[ORM\PrePersist]
+    public function setModificationDate(): void
+    {
+        $this->modificationDate = new \DateTime();
+    }
+    
     public function getSlug(): ?string
     {
         return $this->slug;
