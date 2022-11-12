@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Book;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Route;
@@ -20,7 +21,8 @@ class SkillController extends AbstractController
         'id' => $skill->getId(),
         'slug' => $skill->getSlug(),
         'name' => $skill->getName(),
-        'description' => $skill->getDescription()
+        'description' => $skill->getDescription(),
+       
 ]);
     }
 

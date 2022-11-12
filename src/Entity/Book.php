@@ -23,7 +23,9 @@ use Symfony\Component\Serializer\Annotation\Groups;
         new Put(),
         new Delete(),
     ],
-    normalizationContext: ['groups' => ['book:read']],
+    //collectionOperations: ['get' => ['normalization_context' => ['groups' => 'book:list']]],
+    //itemOperations: ['get' => ['normalization_context' => ['groups' => 'book:item']]],
+    normalizationContext: ['groups' => ['book:read', 'book:item:get']],
     denormalizationContext: ['groups' => ['book:write']],
 )]
 class Book
@@ -34,7 +36,8 @@ class Book
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['book:read', 'book:write'])]
+    #[Groups(['book:read', 'book:write',
+    'book:list', 'book:item', 'skill:read'])]
     private ?string $title = null;
 
     #[ORM\Column(length: 255)]
@@ -45,13 +48,14 @@ class Book
     #[Groups(['book:read', 'book:write'])]
     private ?string $edition = null;
 
-    #[ORM\ManyToMany(targetEntity: Skill::class, inversedBy: 'books')]
+    #[ORM\ManyToMany(targetEntity: Skill::class, mappedBy: 'book')]
     #[Groups(['book:read'])]
-    private Collection $skills;
+    private Collection $skill;
 
     public function __construct()
     {
         $this->skills = new ArrayCollection();
+        $this->skill = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -95,14 +99,6 @@ class Book
         return $this;
     }
 
-    /**
-     * @return Collection<int, Skill>
-     */
-    public function getSkills(): Collection
-    {
-        return $this->skills;
-    }
-
     public function addSkill(Skill $skill): self
     {
         if (!$this->skills->contains($skill)) {
@@ -117,5 +113,13 @@ class Book
         $this->skills->removeElement($skill);
 
         return $this;
+    }
+
+    /**
+     * @return Collection<int, Skill>
+     */
+    public function getSkill(): Collection
+    {
+        return $this->skill;
     }
 }

@@ -9,6 +9,8 @@ use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Put;
 use App\Repository\SkillRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use JsonSerializable;
@@ -40,6 +42,7 @@ class Skill implements JsonSerializable
      * @Gedmo\Slug(fields={"name"})
      */
     #[ORM\Column(length: 255, unique: true)]
+    #[Groups(['skill:read'])]
     private ?string $slug = null;
 
     #[ORM\Column(length: 255)]
@@ -58,7 +61,9 @@ class Skill implements JsonSerializable
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $modificationDate = null;
 
-  
+    #[Groups(['skill:read'])]
+    #[ORM\ManyToMany(targetEntity: Book::class, inversedBy: 'skill')]
+    private Collection $book;
 
     public function jsonSerialize()
     {
@@ -76,6 +81,7 @@ class Skill implements JsonSerializable
     {
         $this->creationDate = new \DateTime();
         $this->modificationDate = new \DateTime();
+        $this->book = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -137,6 +143,30 @@ class Skill implements JsonSerializable
     public function setSlug(?string $slug): self
     {
         $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Book>
+     */
+    public function getBook(): Collection
+    {
+        return $this->book;
+    }
+
+    public function addBook(Book $book): self
+    {
+        if (!$this->book->contains($book)) {
+            $this->book->add($book);
+        }
+
+        return $this;
+    }
+
+    public function removeBook(Book $book): self
+    {
+        $this->book->removeElement($book);
 
         return $this;
     }
