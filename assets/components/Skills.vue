@@ -25,7 +25,6 @@
     <table class="w-full border-2">
       <thead>
         <tr>
-          <th>ID test!!!</th>
           <th>Nom</th>
           <th>Description</th>
           <th>Date de modification</th>
@@ -33,7 +32,6 @@
       </thead>
       <tbody>
         <tr v-for="skill in skills" :key="skill.id" class="text-center border">
-          <td v-text="skill.id"></td>
           <td v-text="skill.name"></td>
           <td v-text="skill.description"></td>
           <td v-text="skill.modificationDate"></td>
@@ -41,10 +39,6 @@
             <a title="Éditer la compétence" :href="`/skills/${skill.slug}`">
               <pen-s-v-g fill-color="#1e83a3" height="29" width="29" />
             </a>
-            <!--
-            <button v-on:click="handleDeletion(skill.id)" title="Supprimer la compétence">
-              <trash-can-s-v-g fill-color="#ee0000" height="22" width="22" /></button>
-              -->
             <button
               v-on:click="openModal(skill.id)"
               title="Supprimer la compétence"

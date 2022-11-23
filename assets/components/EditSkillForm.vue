@@ -7,7 +7,7 @@
         Retour
       </button></a
     >
-    <p>ID de la compétence : {{ skillId }}</p>
+    <!--<p>ID de la compétence : {{ skillId }}</p>-->
     <p>
       Renommer la compétence* : <em>{{ skillName }}</em>
     </p>
@@ -26,7 +26,7 @@
       class="placeholder:italic placeholder:text-slate-400 block bg-white w-full border border-slate-300 rounded-md py-2 pl-9 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"
     ></textarea>
     <br />
-    <h2>Titre du livre ayant la compétence</h2>
+    <h2>Livre(s) ayant la compétence :</h2>
     <br />
     <div v-if="books[0] != null">
       <b>{{ books[0].title }}</b>
@@ -57,6 +57,9 @@
       <div v-if="books[4] != null" v-for="question in books[4].question">
         - {{ question.intitule }}
       </div>
+    </div>
+    <div v-if="books[0] == null">
+      <b>Il n'y a pas encore de livre lié à cette compétence.</b>
     </div>
    <br/>
     
@@ -162,6 +165,11 @@ export default {
           description: "",
         }),
           this.toggleModal();
+          this.skillName=this.newName,
+          this.skillDescription=this.newDescription,
+          this.newName="",
+          this.newDescription=""
+          
       }
     },
   },
