@@ -33,6 +33,7 @@ class Book
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['book:read', 'book:list', 'book:item'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
@@ -52,10 +53,14 @@ class Book
     #[Groups(['book:read'])]
     private Collection $skill;
 
+    #[ORM\OneToMany(mappedBy: 'book', targetEntity: Question::class, orphanRemoval: true)]
+    #[Groups(['book:read', 'skill:read'])]
+    private Collection $question;
+
     public function __construct()
     {
-        $this->skills = new ArrayCollection();
         $this->skill = new ArrayCollection();
+        $this->question = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -121,5 +126,35 @@ class Book
     public function getSkill(): Collection
     {
         return $this->skill;
+    }
+
+    /**
+     * @return Collection<int, Question>
+     */
+    public function getQuestion(): Collection
+    {
+        return $this->question;
+    }
+
+    public function addQuestion(Question $question): self
+    {
+        if (!$this->question->contains($question)) {
+            $this->question->add($question);
+            $question->setBook($this);
+        }
+
+        return $this;
+    }
+
+    public function removeQuestion(Question $question): self
+    {
+        if ($this->question->removeElement($question)) {
+            // set the owning side to null (unless already changed)
+            if ($question->getBook() === $this) {
+                $question->setBook(null);
+            }
+        }
+
+        return $this;
     }
 }

@@ -3,7 +3,6 @@
      :id="this.id"
      :name="this.name"
      :description="this.description"
-    
      />
 </template>
 
@@ -17,9 +16,9 @@ components: {
 },
 props: {
         id: {
-            type: Number,
-            required: true,
-            default: null,
+          type: Number,
+          required: true,
+          default: null,
         },
 
         name: {
@@ -33,8 +32,9 @@ props: {
           required: false,
           default: "",
         },
+        
+        
 
-   
         },
 };
 

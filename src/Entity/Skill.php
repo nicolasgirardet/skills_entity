@@ -36,6 +36,7 @@ class Skill implements JsonSerializable
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['skill:read'])]
     private int $id;
 
     /**
@@ -47,17 +48,17 @@ class Skill implements JsonSerializable
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
-    #[Groups(['skill:read', 'skill:write', 'book:read'])]
+    #[Groups(['skill:read', 'skill:write'])]
     private string $name;
 
-    #[Groups(['skill:read', 'skill:write', 'book:read'])]
+    #[Groups(['skill:read', 'skill:write'])]
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $creationDate = null;
 
-    #[Groups(['skill:read'])]
+    #[Groups(['skill:read', 'skill:write'])]
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $modificationDate = null;
 
