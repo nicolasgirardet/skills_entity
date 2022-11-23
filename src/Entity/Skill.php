@@ -9,6 +9,7 @@ use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Put;
 use App\Repository\SkillRepository;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -17,6 +18,8 @@ use JsonSerializable;
 use Symfony\Component\Validator\Constraints as Assert;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Serializer\Annotation\Groups;
+
+use function PHPUnit\Framework\isNull;
 
 #[ORM\Entity(repositoryClass: SkillRepository::class)]
 #[ORM\HasLifecycleCallbacks]
@@ -55,11 +58,11 @@ class Skill implements JsonSerializable
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column(type: Types::DATE_MUTABLE, options:['default' => '01/01/2022'])]
     private ?\DateTimeInterface $creationDate = null;
 
     #[Groups(['skill:read', 'skill:write'])]
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column(type: Types::DATE_MUTABLE, options:['default' => '01/01/2022'])]
     private ?\DateTimeInterface $modificationDate = null;
 
     #[Groups(['skill:read'])]
@@ -80,9 +83,19 @@ class Skill implements JsonSerializable
 
     public function __construct()
     {
-        $this->creationDate = new \DateTime();
-        $this->modificationDate = new \DateTime();
         $this->book = new ArrayCollection();
+    }
+
+    #[ORM\PrePersist]
+    #[ORM\PreUpdate]
+    public function updateDateTime()
+    {
+        $dateTimeNow = new \DateTime('now');
+
+        if (!$this->getCreationDate()) {
+            $this->setCreationDate($dateTimeNow);
+        }
+        $this->setModificationDate($dateTimeNow);
     }
 
     public function getId(): ?int
@@ -116,10 +129,12 @@ class Skill implements JsonSerializable
 
     public function getCreationDate(): string
     {
-        return $this->creationDate->format('d/m/Y');
+        $date = "";
+        if (!isNull($this->creationDate)) 
+        $date = $this->creationDate->format('d/m/Y');
+        return $date;
     }
 
-    #[ORM\PrePersist]
     public function setCreationDate(): void
     {
         $this->creationDate = new \DateTime();
@@ -130,7 +145,6 @@ class Skill implements JsonSerializable
         return $this->modificationDate->format('d/m/Y');
     }
 
-    #[ORM\PrePersist]
     public function setModificationDate(): void
     {
         $this->modificationDate = new \DateTime();

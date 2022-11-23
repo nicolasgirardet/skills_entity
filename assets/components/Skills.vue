@@ -1,13 +1,5 @@
 <template>
   <div class="row">
-    <!-- LA MODALE CI-DESSOUS -->
-    <modal
-      :shows="shows"
-      :action="action"
-      :toggleModal="toggleModal"
-      :confirmAction="confirmAction"
-    ></modal>
-    <!-- FIN DE LA MODALE -->
     <h1
       class="font-black font-montserrat uppercase italic px-4 text-center text-tualuBlue md:text-xl"
     >
@@ -49,6 +41,14 @@
         </tr>
       </tbody>
     </table>
+  <!-- LA MODALE CI-DESSOUS -->
+  <modal
+      :shows="shows"
+      :action="action"
+      :toggleModal="toggleModal"
+      :confirmAction="confirmAction"
+    ></modal>
+    <!-- FIN DE LA MODALE -->
   </div>
 </template>
 
