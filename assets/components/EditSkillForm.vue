@@ -62,8 +62,13 @@
       <b>Il n'y a pas encore de livre lié à cette compétence.</b>
     </div>
    <br/>
-    
-
+    <!--CI-DESSOUS: LA BARRE DE RECHERCHE D'UN NOUVEAU LIVRE POUR LUI AJOUTER LA COMPÉTENCE-->
+    <question-search-tool
+    :questions="questions"
+    v-model="inputVal"
+    :filteredList="filteredList"
+    ></question-search-tool>
+    <!--FIN DE LA BARRE DE RECHERCHE-->
     <button
       class="p-2 flex items-center border-tualuBlue hover:text-white hover:bg-tualuBlue text-tualuBlue cursor-pointer text-center font-montserrat rounded font-bold border-2 text-sm"
       @click="openModal()"
@@ -84,11 +89,13 @@
 <script>
 import { editSkill, fetchSkillById } from "../services/skill-service";
 import Modal from "./Modal";
+import QuestionSearchTool from "./QuestionSearchTool";
 
 export default {
   name: "EditSkillForm",
   components: {
     modal: Modal,
+    questionSearchTool: QuestionSearchTool,
   },
   data() {
     return {
@@ -104,6 +111,9 @@ export default {
       shows: false,
       action: "la modification",
       books: {},
+      // search tool :
+      questions: ['chat', 'chien', 'cochon', 'vache', 'poule', 'rat', 'cheval', 'canard'],
+      inputVal: "",
     };
   },
 
@@ -168,10 +178,20 @@ export default {
           this.skillName=this.newName,
           this.skillDescription=this.newDescription,
           this.newName="",
-          this.newDescription=""
-          
+          this.newDescription=""   
       }
     },
+
+    // SEARCH TOOL :
+    filteredList() {
+      //const questions = ['sel', 'poivre', 'curry', 'basilic', 'persil', 'menthe', 'baies'];
+      console.log(this.inputVal);
+      console.log(this.questions);
+      //
+      return this.questions.filter((element) => {
+        return element.match(this.inputVal);
+      });
+    }
   },
 };
 </script>
